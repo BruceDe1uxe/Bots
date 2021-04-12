@@ -2,41 +2,41 @@ import nltk
 import random
 
 BOT_CONFIG = {
-    "intents": { # Намерения
-        "hello": { # Намерение поздароваться
-            "examples": ["Привет", "Добрый день", "Шалом", "Здравствуйте"],
-            "responses": ["Привет, человек", "Доброго времени суток"]
+    "intents": { # ГЌГ Г¬ГҐГ°ГҐГ­ГЁГї
+        "hello": { # ГЌГ Г¬ГҐГ°ГҐГ­ГЁГҐ ГЇГ®Г§Г¤Г Г°Г®ГўГ ГІГјГ±Гї
+            "examples": ["ГЏГ°ГЁГўГҐГІ", "Г„Г®ГЎГ°Г»Г© Г¤ГҐГ­Гј", "ГГ Г«Г®Г¬", "Г‡Г¤Г°Г ГўГ±ГІГўГіГ©ГІГҐ"],
+            "responses": ["ГЏГ°ГЁГўГҐГІ, Г·ГҐГ«Г®ГўГҐГЄ", "Г„Г®ГЎГ°Г®ГЈГ® ГўГ°ГҐГ¬ГҐГ­ГЁ Г±ГіГІГ®ГЄ"]
         },
         "bye": {
-            "examples": ["Пока", "Досвидос", "Прощай"],
-            "responses": ["Счастливо", "До свидания", "Если что, возвращайтесь"],
+            "examples": ["ГЏГ®ГЄГ ", "Г„Г®Г±ГўГЁГ¤Г®Г±", "ГЏГ°Г®Г№Г Г©"],
+            "responses": ["Г‘Г·Г Г±ГІГ«ГЁГўГ®", "Г„Г® Г±ГўГЁГ¤Г Г­ГЁГї", "Г…Г±Г«ГЁ Г·ГІГ®, ГўГ®Г§ГўГ°Г Г№Г Г©ГІГҐГ±Гј"],
         },
         "howdoyoudo": {
-            "examples": ["Как дела", "Что делаешь", "Какие дела"],
-            "responses": ["Маюсь фигней", "Отвечаю на дурацкие вопросы", "Ем говно"],
+            "examples": ["ГЉГ ГЄ Г¤ГҐГ«Г ", "Г—ГІГ® Г¤ГҐГ«Г ГҐГёГј", "ГЉГ ГЄГЁГҐ Г¤ГҐГ«Г "],
+            "responses": ["ГЊГ ГѕГ±Гј ГґГЁГЈГ­ГҐГ©", "ГЋГІГўГҐГ·Г Гѕ Г­Г  Г¤ГіГ°Г Г¶ГЄГЁГҐ ГўГ®ГЇГ°Г®Г±Г»", "Г…Г¬ ГЈГ®ГўГ­Г®"],
         },
     },
     "failure_phrases": [
-        "Я ничо не понил",
-        "Что-то непонятно",
-        "Я всего лишь бот, сформулируйте попроще"
+        "Гџ Г­ГЁГ·Г® Г­ГҐ ГЇГ®Г­ГЁГ«",
+        "Г—ГІГ®-ГІГ® Г­ГҐГЇГ®Г­ГїГІГ­Г®",
+        "Гџ ГўГ±ГҐГЈГ® Г«ГЁГёГј ГЎГ®ГІ, Г±ГґГ®Г°Г¬ГіГ«ГЁГ°ГіГ©ГІГҐ ГЇГ®ГЇГ°Г®Г№ГҐ"
     ]
 }
 
 def filter(text):
   text = text.lower()
-  text = [c for c in text if c in 'абвгджзеёийклмнопрстуфхцчшщьыъэюя -']
+  text = [c for c in text if c in 'Г ГЎГўГЈГ¤Г¦Г§ГҐВёГЁГ©ГЄГ«Г¬Г­Г®ГЇГ°Г±ГІГіГґГµГ¶Г·ГёГ№ГјГ»ГєГЅГѕГї -']
   return ''.join(text)
 
-def match(text, example): # "прощяй!" === "Прощай" ??
+def match(text, example): # "ГЇГ°Г®Г№ГїГ©!" === "ГЏГ°Г®Г№Г Г©" ??
   text = filter(text)
   #example = filter(example)
   
   distance = nltk.edit_distance(text, example) / len(example)
   if distance < 0.4:
-    return True # Текст совпадает
+    return True # Г’ГҐГЄГ±ГІ Г±Г®ГўГЇГ Г¤Г ГҐГІ
   else:
-    return False # Текст НЕ совпадает
+    return False # Г’ГҐГЄГ±ГІ ГЌГ… Г±Г®ГўГЇГ Г¤Г ГҐГІ
 
 def get_intent(text): 
   for intent, data in BOT_CONFIG['intents'].items():
@@ -49,7 +49,7 @@ def get_answer_by_intent(intent):
   return random.choice(phrases)
 
 def bot(text):
-  # 1 Понять намерение
+  # 1 ГЏГ®Г­ГїГІГј Г­Г Г¬ГҐГ°ГҐГ­ГЁГҐ
   intent = get_intent(text)
 
   if not intent:
@@ -60,12 +60,12 @@ def bot(text):
 
   
 
-  # 2 Отвечаем "заглушкой"
+  # 2 ГЋГІГўГҐГ·Г ГҐГ¬ "Г§Г ГЈГ«ГіГёГЄГ®Г©"
   failure_phrases = BOT_CONFIG['failure_phrases']
   return random.choice(failure_phrases)
 
 question = ''
-while question not in ['выход', 'отстань']:
+while question not in ['ГўГ»ГµГ®Г¤', 'Г®ГІГ±ГІГ Г­Гј']:
   question = input()
   answer = bot(question)
   print(answer)
@@ -98,7 +98,7 @@ from sklearn.linear_model import LogisticRegression
 log_reg = LogisticRegression()
 log_reg.fit(X, y)
 
-log_reg.predict(count_vectorizer.transform(['чем ты там занимаешься']))
+log_reg.predict(count_vectorizer.transform(['Г·ГҐГ¬ ГІГ» ГІГ Г¬ Г§Г Г­ГЁГ¬Г ГҐГёГјГ±Гї']))
 
 
 log_reg.score(X, y)
@@ -134,14 +134,14 @@ pickle.dump(TFV, open('TFV.model', 'wb'))
 
 vctrzr = pickle.load(open('lin_svc.model', 'rb'))
 
-! pip install python-telegram-bot --upgrade
+#! pip install python-telegram-bot --upgrade
 
 from telegram import Update
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
 
 def start(update: Update, context: CallbackContext) -> None:
     """Send a message when the command /start is issued."""
-    update.message.reply_text('Кукуськи, пуська!')
+    update.message.reply_text('ГЉГіГЄГіГ±ГјГЄГЁ, ГЇГіГ±ГјГЄГ !')
 
 
 def help_command(update: Update, context: CallbackContext) -> None:
